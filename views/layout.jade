@@ -1,7 +1,44 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='icon', type='image/png', href='img/favicon.ico')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    // Optional theme
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    
+    title Appointments
   body
-    block content
+    nav.navbar.navbar-default
+      .container
+        .navbar-header
+          a.navbar-brand(href='/') Appointment Reminders
+        div
+          ul.nav.navbar-nav
+            li
+              a(href='/')
+                | Index
+            li
+              a(href='new')
+                | New appointment
+    
+    .container
+      .row
+        .col-lg-9
+        block content
+        .col-lg-3
+      // /row
+      hr
+      footer
+        | Made with 
+        i.fa.fa-heart
+        |  by your pals
+        |    
+        a(href='http://www.twilio.com') @twilio
+      // /container
+      
+      script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.1.2/parsley.min.js')

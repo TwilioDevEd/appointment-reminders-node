@@ -14,8 +14,6 @@ router.get('/', function(req, res, next) {
     .then(function (appointments) {
       res.render('appointments/index', { appointments });
     });
-
-  res.send(getTimeZones());
 });
 
 module.exports = router;
