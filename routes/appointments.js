@@ -8,12 +8,17 @@ var getTimeZones = function(){
   return moment.tz.names();
 }
 
-/* GET users listing. */
+// GET: /
 router.get('/', function(req, res, next) {
   Appointment.find()
     .then(function (appointments) {
       res.render('appointments/index', { appointments });
     });
+});
+
+// GET: /create
+router.get('/create', function(req, res, next) {
+  res.render('appointments/create', { timeZones: getTimeZones() });
 });
 
 module.exports = router;

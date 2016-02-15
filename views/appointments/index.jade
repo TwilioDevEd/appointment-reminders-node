@@ -1,6 +1,27 @@
 extends ../layout
 
 block content
-  .container
-    p
-      strong appointments
+  table.table
+      thead
+        tr
+          th Name
+          th Phone number
+          th Appointment time (UTC)
+          th Notification time
+          th Created at
+          th Actions
+          th
+      tbody
+        each appointment in appointments
+          tr
+            td  !{appointment.name}
+            td  !{appointment.phoneNumber}
+            td  !{appointment.time}
+            td  !{appointment.timeZone}
+            td  !{appointment.createdAt}
+            td
+              form(action="/appointments/!{appointment.id}",method="delete")
+                button.btn.btn-danger.btn-mini(type='submit') Delete
+            td
+              a(href="/appointment/!{appointment.id}") Edit
+            

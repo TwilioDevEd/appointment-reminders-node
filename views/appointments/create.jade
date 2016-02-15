@@ -1,0 +1,47 @@
+extends ../layout
+
+block styles
+  link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/css/bootstrap-datetimepicker.min.css')
+  link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css')
+
+block content
+  h2 Create New Appointment
+
+  form#formAppointment.form-horizontal.col-lg-5(name='formAppointment', method='POST', action='/appointments', data-parsley-validate='')
+    .form-group
+      label.col-sm-4.control-label(for='inputName') Name *
+      .col-sm-8
+        input#inputName.form-control(type='text', name='name', placeholder='Name', required='', data-parsley-maxlength='20', data-parsley-maxlength-message="This field can't have more than 20 characters")
+    .form-group
+      label.col-sm-4.control-label(for='inputPhoneNumber') Phone Number
+      .col-sm-8
+        input#inputPhoneNumber.form-control(type='text', name='phoneNumber', placeholder='Phone Number', required='')
+    .form-group
+      label.col-sm-4.control-label(for='inputDate') Appointment Date
+      .col-sm-8
+        input#inputDate.form-control(type='text', name='date', placeholder='Pick a Date', required='')
+    .form-group
+      label.col-sm-4.control-label(for='selectDelta') Notification Time
+      .col-sm-8
+        select#selectDelta.form-control(name='delta', required='')
+          option(value='') Select a time
+          option(value='15') 15 Minutes
+          option(value='30') 30 Minutes
+          option(value='45') 45 Minutes
+          option(value='60') 60 Minutes
+    .form-group
+      label.col-sm-4.control-label(for='selectTimeZone') Time Zone
+      .col-sm-8
+        select#selectTimeZone.form-control(name='timeZone', required='')
+          each zone in timeZones
+            option(value="!{zone}") !{zone}
+    .form-group
+      .col-sm-offset-4.col-sm-8
+        button.btn.btn-default(type='submit') Create
+        
+
+block scripts
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js')
+  script(src='/js/datetime-picker.js')

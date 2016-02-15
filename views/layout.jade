@@ -8,6 +8,7 @@ html
     // Optional theme
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
     link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+    block styles
     link(rel='stylesheet', href='/css/style.css')
     
     title Appointments
@@ -22,7 +23,7 @@ html
               a(href='/')
                 | Index
             li
-              a(href='new')
+              a(href='/appointments/create')
                 | New appointment
     
     .container
@@ -42,3 +43,4 @@ html
       
       script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
       script(src='https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.1.2/parsley.min.js')
+      block scripts
