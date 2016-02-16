@@ -7,11 +7,12 @@ block styles
 block content
   h2 Create New Appointment
 
-  form#formAppointment.form-horizontal.col-lg-5(name='formAppointment', method='POST', action='/appointments', data-parsley-validate='')
+  form#formAppointment.form-horizontal.col-lg-5(name='formAppointment', method='POST', action='/appointments/#{appointment.id}/edit', data-parsley-validate='')
     include _form
+    
     .form-group
       .col-sm-offset-4.col-sm-8
-        button.btn.btn-default(type='submit') Create
+        button.btn.btn-default(type='submit') Save
         
 
 block scripts

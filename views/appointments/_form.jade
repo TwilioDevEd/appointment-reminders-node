@@ -1,0 +1,28 @@
+.form-group
+  label.col-sm-4.control-label(for='inputName') Name *
+  .col-sm-8
+    input#inputName.form-control(type='text', name='name', placeholder='Name', required='', data-parsley-maxlength='20', data-parsley-maxlength-message="This field can't have more than 20 characters", value="#{appointment.name}")
+.form-group
+  label.col-sm-4.control-label(for='inputPhoneNumber') Phone Number
+  .col-sm-8
+    input#inputPhoneNumber.form-control(type='number', name='phoneNumber', placeholder='Phone Number', required='', value="#{appointment.phoneNumber}")
+.form-group
+  label.col-sm-4.control-label(for='time') Appointment Date
+  .col-sm-8
+    input#inputDate.form-control(type='text', name='time', placeholder='Pick a Date', required='', value="#{moment(appointment.time).format('MM-DD-YYYY hh:mma')}")
+.form-group
+  label.col-sm-4.control-label(for='selectNotification') Notification Time
+  .col-sm-8
+    select#selectDelta.form-control(name='notification', required='', value="#{appointment.notification}")
+      option(selected=appointment.notification == '', value='') Select a time
+      option(selected=appointment.notification == '15', value='15') 15 Minutes
+      option(selected=appointment.notification == '30', value='30') 30 Minutes
+      option(selected=appointment.notification == '45', value='45') 45 Minutes
+      option(selected=appointment.notification == '60', value='60') 60 Minutes
+.form-group
+  label.col-sm-4.control-label(for='selectTimeZone') Time Zone
+  .col-sm-8
+    select#selectTimeZone.form-control(name='timeZone', required='', value="#{appointment.timeZone}")
+      each zone in timeZones
+        option()
+        option(selected=zone == appointment.timeZone, value="#{zone}") !{zone}

@@ -9,7 +9,7 @@ var getTimeZones = function(){
   return momentTimeZone.tz.names();
 }
 
-// GET: /
+// GET: /appointments
 router.get('/', function(req, res, next) {
   Appointment.find()
     .then(function (appointments) {
@@ -17,23 +17,65 @@ router.get('/', function(req, res, next) {
     });
 });
 
-// GET: /create
+// GET: /appointments/create
 router.get('/create', function(req, res, next) {
-  res.render('appointments/create', { timeZones: getTimeZones() });
+  res.render('appointments/create', { timeZones: getTimeZones(), appointment : new Appointment({name: "", phoneNumber: "", notification: '', timeZone: "", time:''}) });
 });
 
-// POST: /
+// POST: /appointments
 router.post('/', function(req, res, next) {
   var name = req.body.name;
   var phoneNumber = req.body.phoneNumber;
   var notification = req.body.notification;
   var timeZone = req.body.timeZone;
-  console.log(req.body.time);
   var time = moment(req.body.time, "MM-DD-YYYY hh:mma");
 
   var appointment = new Appointment({ name, phoneNumber, notification, timeZone, time });
   appointment.save()
-    .then(function (savedAppointment) {
+    .then(function () {
+      res.redirect('/');
+    });
+});
+
+// GET: /appointments/:id/edit
+router.get('/:id/edit', function(req, res, next) {
+  var id = req.params.id;
+  Appointment.findOne({ _id: id })
+    .then(function (appointment) {
+      res.render('appointments/edit', { timeZones: getTimeZones(), appointment:  appointment});
+    });
+});
+
+// POST: /appointments/:id/edit
+router.post('/:id/edit', function(req, res, next) {
+  var id = req.params.id;
+  var name = req.body.name;
+  var phoneNumber = req.body.phoneNumber;
+  var notification = req.body.notification;
+  var timeZone = req.body.timeZone;
+  var time = moment(req.body.time, "MM-DD-YYYY hh:mma");
+
+  Appointment.findOne({ _id: id })
+    .then(function (appointment) {
+      appointment.name = name;
+      appointment.phoneNumber = phoneNumber;
+      appointment.notification = notification;
+      appointment.timeZone = timeZone;
+      appointment.time = time;
+
+      appointment.save()
+        .then(function () {
+          res.redirect('/');
+        });
+    });
+});
+
+// POST: /appointments/:id/delete
+router.post('/:id/delete', function(req, res, next) {
+  var id = req.params.id;
+
+  Appointment.remove({ _id: id })
+    .then(function () {
       res.redirect('/');
     });
 });

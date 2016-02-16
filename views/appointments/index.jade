@@ -20,8 +20,8 @@ block content
             td  !{appointment.notification}
             td  !{appointment.timeZone}
             td
-              a.btn.btn-sm(href="/appointments/#{appointment.id}") Edit
+              a.btn.btn-default.btn-sm(href="/appointments/#{appointment.id}/edit") Edit
             td
-              form(action="/appointments/!{appointment.id}",method="delete")
+              form(action="/appointments/#{appointment.id}/delete",method="POST")
                 button.btn.btn-danger.btn-sm(type='submit') Delete
             
