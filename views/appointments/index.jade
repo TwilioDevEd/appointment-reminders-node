@@ -7,8 +7,8 @@ block content
           th Name
           th Phone number
           th Appointment time (UTC)
-          th Notification time
-          th Created at
+          th Reminder time
+          th Timezone
           th Actions
           th
       tbody
@@ -17,11 +17,11 @@ block content
             td  !{appointment.name}
             td  !{appointment.phoneNumber}
             td  !{appointment.time}
+            td  !{appointment.notification}
             td  !{appointment.timeZone}
-            td  !{appointment.createdAt}
+            td
+              a.btn.btn-sm(href="/appointments/#{appointment.id}") Edit
             td
               form(action="/appointments/!{appointment.id}",method="delete")
-                button.btn.btn-danger.btn-mini(type='submit') Delete
-            td
-              a(href="/appointment/!{appointment.id}") Edit
+                button.btn.btn-danger.btn-sm(type='submit') Delete
             

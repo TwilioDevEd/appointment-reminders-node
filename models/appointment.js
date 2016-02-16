@@ -3,11 +3,9 @@ var mongoose = require('mongoose');
 var Appointment = new mongoose.Schema({
   name:String,
   phoneNumber: String,
-  description: String,
-  time : Date,
+  notification : Number,
   timeZone : String,
-  createdAt : Date
-
+  time : Date
 });
 
 var appointment = mongoose.model('appointment', Appointment);
