@@ -12,10 +12,9 @@ var AppointmentSchema = new mongoose.Schema({
 });
 
 AppointmentSchema.methods.requiresNotification = function (date) {
-
-  return moment.duration(moment(date).utc()
-                          .diff(moment(this.time).tz(this.timeZone).utc())
-                        ).asMinutes() === 0;
+  return Math.round(moment.duration(moment(this.time).tz(this.timeZone).utc()
+                          .diff(moment(date).utc())
+                        ).asMinutes()) === this.notification;
 };
 
 AppointmentSchema.statics.sendNotifications = function(callback) {
@@ -26,7 +25,7 @@ AppointmentSchema.statics.sendNotifications = function(callback) {
     .find()
     .then(function (appointments) {
       appointments = appointments.filter(function(appointment) {
-              return !appointment.requiresNotification(searchDate);
+              return appointment.requiresNotification(searchDate);
       });
       if (appointments.length > 0) {
         sendNotifications(appointments);

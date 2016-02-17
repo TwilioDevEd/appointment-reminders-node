@@ -4,10 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var CronJob = require('cron').CronJob;
 
 var appointments = require('./routes/appointments');
-var notificationsWorker = require('./workers/notificationsWorker');
+var scheduler = require('./scheduler');
 
 var app = express();
 
@@ -58,20 +57,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-// var moment = require('moment');
-
-new CronJob('* * * * * *', function() {
-
-  notificationsWorker.run();
-  //
-  // moment.duration(moment().utc()
-  //                         .diff(moment("2015-05-23 00:55").tz('Europe/Berlin').utc())
-  //                 ).asMinutes();
-
-
-  console.log('You will see this message every minute');
-}, null, true, 'America/Los_Angeles');
-
+scheduler.start();
 
 module.exports = app;
