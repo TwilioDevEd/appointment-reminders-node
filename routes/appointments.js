@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var momentTimeZone = require('moment-timezone');
 var moment = require('moment');
-var Appointment = require('../models/appointment')
+var Appointment = require('../models/appointment');
 
 
 var getTimeZones = function(){
