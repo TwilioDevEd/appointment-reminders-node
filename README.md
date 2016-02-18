@@ -62,7 +62,7 @@ To run the app locally:
 
 1. Run the application.
 
-  ```
+  ```bash
   $ npm start
   ```
 
