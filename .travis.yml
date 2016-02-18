@@ -1,11 +1,17 @@
 
 language: node_js
 node_js:
+- 'stable'
 - '5.0.0'
+- '4.0.0'
+- '0.10'
+- '0.12'
 install:
 - npm install
 env:
   global:
     - export TWILIO_ACCOUNT_SID=Your-Account-SID
     - export TWILIO_AUTH_TOKEN=Your-Twilio-Auth-Token
-    - export TWILIO_NUMBER=Your-Twilio-number
+    - export TWILIO_PHONE_NUMBER=Your-Twilio-Phone-Number
+    - export MONGO_URL=Mongo-Url
+    - export MONGO_URL_TEST=Mongo-Url-TEST

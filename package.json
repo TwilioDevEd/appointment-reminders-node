@@ -1,10 +1,29 @@
 {
   "name": "appointment-reminders-node",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "export NODE_ENV=test && mocha test"
   },
+  "descrption":"Node implementation of Appointment Reminders",
+  "author": {
+    "name": "Omar Ahmed",
+    "email": "neb.trx@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TwilioDevEd/appointment-reminders-node"
+  },
+  "keywords": [
+   "node",
+   "appointment reminders",
+   "twilio",
+   "express",
+   "sms",
+   "notification"
+ ],
   "dependencies": {
     "bluebird": "^3.3.1",
     "body-parser": "~1.13.2",
