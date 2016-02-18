@@ -15,4 +15,4 @@ env:
     - export TWILIO_AUTH_TOKEN=Your-Twilio-Auth-Token
     - export TWILIO_PHONE_NUMBER=Your-Twilio-Phone-Number
     - export MONGO_URL=Mongo-Url
-    - export MONGO_URL_TEST=Mongo-Url-TEST
+    - export MONGO_URL_TEST=mongodb://localhost/appointment-reminders-node-test
