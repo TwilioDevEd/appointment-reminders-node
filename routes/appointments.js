@@ -13,7 +13,7 @@ var getTimeZones = function(){
 router.get('/', function(req, res, next) {
   Appointment.find()
     .then(function (appointments) {
-      res.render('appointments/index', { appointments });
+      res.render('appointments/index', { appointments: appointments });
     });
 });
 
