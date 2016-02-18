@@ -4,7 +4,6 @@ node_js:
 - 'stable'
 - '5.0.0'
 - '4.0.0'
-- '0.10'
 - '0.12'
 install:
 - npm install
