@@ -1,0 +1,118 @@
+<!DOCTYPE html><html><head><title>Appointment Reminders</title><style>body, html {
+  height:100%;
+  width:100%;
+  padding:0;
+  margin:0;
+  overflow:hidden;
+  background-color:#ddd;
+}
+.wrapper {
+  height:100%;
+  width:100%;
+}</style><link rel="shortcut icon" href="//twilio.com/bundles/marketing/img/favicons/favicon.ico"><link rel="apple-touch-icon" href="//twilio.com/bundles/marketing/img/favicons/favicon_57.png"><link rel="apple-touch-icon" sizes="72x72" href="//twilio.com/bundles/marketing/img/favicons/favicon_72.png"><link rel="apple-touch-icon" sizes="114x114" href="//twilio.com/bundles/marketing/img/favicons/favicon_114.png"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"><link rel="stylesheet" href="viewsaurus.css"></head><body><div class="wrapper"><div id="viewsaurus" data-title="Appointment Reminders"><div class="saurus-panes"><div class="saurus-prose"><div class="saurus-prose-header"><div class="title-outer"><span class="step-title">Appointment Reminders</span></div></div><div class="saurus-nav-buttons"><div class="saurus-nav-button nav-overview"><div class="saurus-nav-button-inner"><i class="fa fa-fw fa-list"></i></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-previous"><div class="saurus-nav-button-inner"><a href=""> <i class="fa fa-fw fa-play fa-rotate-180"></i></a></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-next clickable"><div class="saurus-nav-button-inner"><a href="#1"> <i class="fa fa-fw fa-play"></i></a></div></div><div class="saurus-next-title"><span class="next-title-inner"></span></div></div><div class="saurus-progress-bar"></div><div class="saurus-start"><p>Learn to implement appointment reminders in your web app with Twilio. Appointment reminders allow you to automate the process of reaching out to your customers in advance of an upcoming appointment.</p><a href="#0">Start Tutorial</a></div><div class="saurus-content"><div data-title="Appointment Reminders with Twilio and Node.js" class="chapter"><div data-file="app.js" class="step"><h2 id="what-does-this-thing-do-">What does this thing do?</h2>
+<p> This Node.js <a href="//expressjs.com/en/index.html">Express</a> web application shows how to create
+appointments for customers at a date in future, and send out reminders for
+those appointments in a background job that runs every few minutes. </p>
+<p>In this tutorial, we&#39;ll point out the key bits of code that make this application
+work. <a href="https://github.com/TwilioDevEd/appointment-reminders-node">Check out the project README on GitHub</a>
+to see how to run the code yourself. </p>
+<p>Let&#39;s get started! Click the right arrow above to advance to the next code snippet.</p>
+<hr>
+<p><strong>See Also:</strong> </p>
+<ul>
+<li><a href="//www.twilio.com/docs/node/install">The Twilio Node Helper Library</a></li>
+<li><a href="//www.twilio.com/docs/client">Twilio Client docs</a></li>
+<li><a href="//expressjs.com/en/starter/installing.html">Getting Started with Express</a></li>
+<li><a href="//www.twilio.com/docs/node/install">The Twilio Node Helper Library</a></li>
+</ul>
+</div><div data-file=".env" data-highlight="1-3" class="step"><h2 id="configure-the-application-to-use-twilio">Configure the application to use Twilio</h2>
+<p>Before we can use the Twilio API to send reminder text messages, we need to 
+configure our account credentials. These can be found on your 
+<a href="https://www.twilio.com/user/account/voice">Twilio dashboard</a>.
+You&#39;ll also need an SMS-enabled phone number - you can find or purchase a 
+new one to use <a href="https://www.twilio.com/user/account/phone-numbers/incoming">here</a>.</p>
+<hr>
+<p><strong>See Also:</strong> </p>
+<ul>
+<li><a href="https://www.twilio.com/user/account">Your Account SID and Auth Token</a></li>
+<li><a href="https://www.twilio.com/user/account/phone-numbers/incoming">Your Available Phone Numbers</a></li>
+</ul>
+</div><div data-file="routes/appointments.js" data-highlight="25-38" class="step"><h2 id="create-a-new-appointment">Create a new appointment</h2>
+<p>In order to send an appointment reminder, we first need to create an
+appointment! In the controller, we take information
+(notably a customer&#39;s name and phone number, plus a time for the appointment 
+in the future) and save it in an <code>Appointment</code> model.</p>
+<pre><code>...
+
+var AppointmentSchema = new mongoose.Schema({
+  name:String,
+  phoneNumber: String,
+  notification : Number,
+  timeZone : String,
+  time : {type : Date, index : true}
+});
+
+...
+</code></pre><hr>
+<p><strong>See also:</strong></p>
+<ul>
+<li><a href="//docs.mongodb.org/manual/installation/">Install guide for MongoDB</a></li>
+<li><a href="//mongoosejs.com/docs/index.html">Quick start with mongoose</a></li>
+</ul>
+</div><div data-file="scheduler.js" class="step"><h2 id="schedule-a-job-to-send-reminders">Schedule a job to send reminders</h2>
+<p>Once in a minute, we&#39;d like our application to check the appointments database
+to see if any appointments are coming up that require reminders to be sent out.
+We configure both the job code we&#39;d like to run and the interval on which to
+run inside the start function. The we call it from the application execution 
+entry point like this: <code>scheduler.start()</code></p>
+<hr>
+<p><strong>See Also:</strong> </p>
+<ul>
+<li><a href="https://github.com/ncb000gt/node-cron">Task Scheduling with node-cron</a></li>
+</ul>
+</div><div data-file="workers/notificationsWorker.js" class="step"><h2 id="create-a-worker-function-to-run-the-job">Create a worker function to run the job</h2>
+<p>To actually execute our recurring job logic, we create a worker function 
+which uses a <a href="//mongoosejs.com/docs/guide.html#statics">Static Model Method</a> 
+to query the database for upcoming appointments and sends reminders as necessary.</p>
+</div><div data-file="models/appointment.js" data-highlight="14-18, 20-67" class="step"><h2 id="find-appointments-that-need-reminders">Find appointments that need reminders</h2>
+<p>Our recurring job uses an static model method of the <code>Appointment</code> model to
+query the database for appointments coming up in the current minute and
+send out reminder messages using a
+<a href="//twilio.github.io/twilio-node/#restapi">Twilio REST Client</a> 
+we previously initialized with our Twilio account credentials.</p>
+<p>As appoinments are defined in differents time zones, we used 
+<a href="//momentjs.com/">Moment.js library</a> in order to properly 
+query every upcoming appointment considering its time zone.</p>
+<hr>
+<p><strong> See Also:</strong></p>
+<ul>
+<li><a href="//momentjs.com/docs/">Moment.js Documentation</a></li>
+</ul>
+</div><div data-file="models/appointment.js" data-highlight="38-59" class="step"><h2 id="send-reminder-messages-with-the-twilio-api">Send reminder messages with the Twilio API</h2>
+<p>This code is called for every appointment coming up that
+requires a reminder to be sent. We provide a configuration object with a <code>to</code> 
+field, which is the customer&#39;s phone number, a <code>from</code>
+field, which is a <a href="https://www.twilio.com/user/account/phone-numbers/incoming">number in our account</a>,
+and a <code>body</code> field, which contains the text of the message. Then we pass it
+to the <code>sendMessage</code> method along with a callback to log errors and success.</p>
+</div><div class="step"><h2 id="where-to-next-">Where to next?</h2>
+<p>That&#39;s it! Our application is all set to send out reminders for
+upcoming appointments. We hope you found this sample application useful. 
+If you&#39;re a Node.js/Express developer working with Twilio, you might enjoy these other tutorials:</p>
+<h3 id="-workflow-automation-www-twilio-com-docs-tutorials-walkthrough-workflow-automation-node-express-"><a href="//www.twilio.com/docs/tutorials/walkthrough/workflow-automation/node/express">Workflow Automation</a></h3>
+<p>Build a ready-for-scale automated SMS workflow, for a vacation rental company.</p>
+<h3 id="-browser-calls-www-twilio-com-docs-tutorials-walkthrough-browser-calls-node-express-"><a href="//www.twilio.com/docs/tutorials/walkthrough/browser-calls/node/express">Browser Calls</a></h3>
+<p>Make browser-to-phone and browser-to-browser calls with ease.</p>
+<h3 id="did-this-help-">Did this help?</h3>
+<p>As always, we&#39;d love to hear what you thought of this tutorial!
+<a href="mailto:devedoss@twilio.com">Shoot us a note</a> to let us know what you liked
+and what we can do better. See you next time!</p>
+</div></div>
+<div class="saurus-files" style="display:none;"><textarea class="saurus-file" data-file="app.js" data-mode="javascript">dmFyIGV4cHJlc3MgPSByZXF1aXJlKCdleHByZXNzJyk7CnZhciBwYXRoID0gcmVxdWlyZSgncGF0aCcpOwp2YXIgZmF2aWNvbiA9IHJlcXVpcmUoJ3NlcnZlLWZhdmljb24nKTsKdmFyIGxvZ2dlciA9IHJlcXVpcmUoJ21vcmdhbicpOwp2YXIgY29va2llUGFyc2VyID0gcmVxdWlyZSgnY29va2llLXBhcnNlcicpOwp2YXIgYm9keVBhcnNlciA9IHJlcXVpcmUoJ2JvZHktcGFyc2VyJyk7Cgp2YXIgYXBwb2ludG1lbnRzID0gcmVxdWlyZSgnLi9yb3V0ZXMvYXBwb2ludG1lbnRzJyk7CnZhciBzY2hlZHVsZXIgPSByZXF1aXJlKCcuL3NjaGVkdWxlcicpOwoKdmFyIGFwcCA9IGV4cHJlc3MoKTsKCi8vIHZpZXcgZW5naW5lIHNldHVwCmFwcC5zZXQoJ3ZpZXdzJywgcGF0aC5qb2luKF9fZGlybmFtZSwgJ3ZpZXdzJykpOwphcHAuc2V0KCd2aWV3IGVuZ2luZScsICdqYWRlJyk7CgovLyB1bmNvbW1lbnQgYWZ0ZXIgcGxhY2luZyB5b3VyIGZhdmljb24gaW4gL3B1YmxpYwovL2FwcC51c2UoZmF2aWNvbihwYXRoLmpvaW4oX19kaXJuYW1lLCAncHVibGljJywgJ2Zhdmljb24uaWNvJykpKTsKYXBwLnVzZShsb2dnZXIoJ2RldicpKTsKYXBwLnVzZShib2R5UGFyc2VyLmpzb24oKSk7CmFwcC51c2UoYm9keVBhcnNlci51cmxlbmNvZGVkKHsgZXh0ZW5kZWQ6IGZhbHNlIH0pKTsKYXBwLnVzZShjb29raWVQYXJzZXIoKSk7CmFwcC51c2UoZXhwcmVzcy5zdGF0aWMocGF0aC5qb2luKF9fZGlybmFtZSwgJ3B1YmxpYycpKSk7CmFwcC5sb2NhbHMubW9tZW50ID0gcmVxdWlyZSgnbW9tZW50Jyk7CgphcHAudXNlKCcvYXBwb2ludG1lbnRzJywgYXBwb2ludG1lbnRzKTsKYXBwLnVzZSgnLycsIGFwcG9pbnRtZW50cyk7CgovLyBjYXRjaCA0MDQgYW5kIGZvcndhcmQgdG8gZXJyb3IgaGFuZGxlcgphcHAudXNlKGZ1bmN0aW9uKHJlcSwgcmVzLCBuZXh0KSB7CiAgdmFyIGVyciA9IG5ldyBFcnJvcignTm90IEZvdW5kJyk7CiAgZXJyLnN0YXR1cyA9IDQwNDsKICBuZXh0KGVycik7Cn0pOwoKLy8gZXJyb3IgaGFuZGxlcnMKCi8vIGRldmVsb3BtZW50IGVycm9yIGhhbmRsZXIKLy8gd2lsbCBwcmludCBzdGFja3RyYWNlCmlmIChhcHAuZ2V0KCdlbnYnKSA9PT0gJ2RldmVsb3BtZW50JykgewogIGFwcC51c2UoZnVuY3Rpb24oZXJyLCByZXEsIHJlcywgbmV4dCkgewogICAgcmVzLnN0YXR1cyhlcnIuc3RhdHVzIHx8IDUwMCk7CiAgICByZXMucmVuZGVyKCdlcnJvcicsIHsKICAgICAgbWVzc2FnZTogZXJyLm1lc3NhZ2UsCiAgICAgIGVycm9yOiBlcnIKICAgIH0pOwogIH0pOwp9CgovLyBwcm9kdWN0aW9uIGVycm9yIGhhbmRsZXIKLy8gbm8gc3RhY2t0cmFjZXMgbGVha2VkIHRvIHVzZXIKYXBwLnVzZShmdW5jdGlvbihlcnIsIHJlcSwgcmVzLCBuZXh0KSB7CiAgcmVzLnN0YXR1cyhlcnIuc3RhdHVzIHx8IDUwMCk7CiAgcmVzLnJlbmRlcignZXJyb3InLCB7CiAgICBtZXNzYWdlOiBlcnIubWVzc2FnZSwKICAgIGVycm9yOiB7fQogIH0pOwp9KTsKCnNjaGVkdWxlci5zdGFydCgpOwoKbW9kdWxlLmV4cG9ydHMgPSBhcHA7Cg==</textarea>
+<textarea class="saurus-file" data-file=".env" data-mode="text">ZXhwb3J0IFRXSUxJT19BQ0NPVU5UX1NJRD1Zb3VyLUFjY291bnQtU0lECmV4cG9ydCBUV0lMSU9fQVVUSF9UT0tFTj1Zb3VyLVR3aWxpby1BdXRoLVRva2VuCmV4cG9ydCBUV0lMSU9fUEhPTkVfTlVNQkVSPVlvdXItVHdpbGlvLVBob25lLU51bWJlcgpleHBvcnQgTU9OR09fVVJMPU1vbmdvLVVybApleHBvcnQgTU9OR09fVVJMX1RFU1Q9TW9uZ28tVXJsLVRlc3QK</textarea>
+<textarea class="saurus-file" data-file="routes/appointments.js" data-mode="javascript">dmFyIGV4cHJlc3MgPSByZXF1aXJlKCdleHByZXNzJyk7CnZhciByb3V0ZXIgPSBleHByZXNzLlJvdXRlcigpOwp2YXIgbW9tZW50VGltZVpvbmUgPSByZXF1aXJlKCdtb21lbnQtdGltZXpvbmUnKTsKdmFyIG1vbWVudCA9IHJlcXVpcmUoJ21vbWVudCcpOwp2YXIgQXBwb2ludG1lbnQgPSByZXF1aXJlKCcuLi9tb2RlbHMvYXBwb2ludG1lbnQnKTsKCgp2YXIgZ2V0VGltZVpvbmVzID0gZnVuY3Rpb24oKXsKICByZXR1cm4gbW9tZW50VGltZVpvbmUudHoubmFtZXMoKTsKfQoKLy8gR0VUOiAvYXBwb2ludG1lbnRzCnJvdXRlci5nZXQoJy8nLCBmdW5jdGlvbihyZXEsIHJlcywgbmV4dCkgewogIEFwcG9pbnRtZW50LmZpbmQoKQogICAgLnRoZW4oZnVuY3Rpb24gKGFwcG9pbnRtZW50cykgewogICAgICByZXMucmVuZGVyKCdhcHBvaW50bWVudHMvaW5kZXgnLCB7IGFwcG9pbnRtZW50czogYXBwb2ludG1lbnRzIH0pOwogICAgfSk7Cn0pOwoKLy8gR0VUOiAvYXBwb2ludG1lbnRzL2NyZWF0ZQpyb3V0ZXIuZ2V0KCcvY3JlYXRlJywgZnVuY3Rpb24ocmVxLCByZXMsIG5leHQpIHsKICByZXMucmVuZGVyKCdhcHBvaW50bWVudHMvY3JlYXRlJywgeyB0aW1lWm9uZXM6IGdldFRpbWVab25lcygpLCBhcHBvaW50bWVudCA6IG5ldyBBcHBvaW50bWVudCh7bmFtZTogIiIsIHBob25lTnVtYmVyOiAiIiwgbm90aWZpY2F0aW9uOiAnJywgdGltZVpvbmU6ICIiLCB0aW1lOicnfSkgfSk7Cn0pOwoKLy8gUE9TVDogL2FwcG9pbnRtZW50cwpyb3V0ZXIucG9zdCgnLycsIGZ1bmN0aW9uKHJlcSwgcmVzLCBuZXh0KSB7CiAgdmFyIG5hbWUgPSByZXEuYm9keS5uYW1lOwogIHZhciBwaG9uZU51bWJlciA9IHJlcS5ib2R5LnBob25lTnVtYmVyOwogIHZhciBub3RpZmljYXRpb24gPSByZXEuYm9keS5ub3RpZmljYXRpb247CiAgdmFyIHRpbWVab25lID0gcmVxLmJvZHkudGltZVpvbmU7CiAgdmFyIHRpbWUgPSBtb21lbnQocmVxLmJvZHkudGltZSwgIk1NLURELVlZWVkgaGg6bW1hIik7CgogIHZhciBhcHBvaW50bWVudCA9IG5ldyBBcHBvaW50bWVudCh7IG5hbWU6IG5hbWUsIHBob25lTnVtYmVyOiBwaG9uZU51bWJlciwgbm90aWZpY2F0aW9uOiBub3RpZmljYXRpb24sIHRpbWVab25lOiB0aW1lWm9uZSwgdGltZTogdGltZSB9KTsKICBhcHBvaW50bWVudC5zYXZlKCkKICAgIC50aGVuKGZ1bmN0aW9uICgpIHsKICAgICAgcmVzLnJlZGlyZWN0KCcvJyk7CiAgICB9KTsKfSk7CgovLyBHRVQ6IC9hcHBvaW50bWVudHMvOmlkL2VkaXQKcm91dGVyLmdldCgnLzppZC9lZGl0JywgZnVuY3Rpb24ocmVxLCByZXMsIG5leHQpIHsKICB2YXIgaWQgPSByZXEucGFyYW1zLmlkOwogIEFwcG9pbnRtZW50LmZpbmRPbmUoeyBfaWQ6IGlkIH0pCiAgICAudGhlbihmdW5jdGlvbiAoYXBwb2ludG1lbnQpIHsKICAgICAgcmVzLnJlbmRlcignYXBwb2ludG1lbnRzL2VkaXQnLCB7IHRpbWVab25lczogZ2V0VGltZVpvbmVzKCksIGFwcG9pbnRtZW50OiAgYXBwb2ludG1lbnR9KTsKICAgIH0pOwp9KTsKCi8vIFBPU1Q6IC9hcHBvaW50bWVudHMvOmlkL2VkaXQKcm91dGVyLnBvc3QoJy86aWQvZWRpdCcsIGZ1bmN0aW9uKHJlcSwgcmVzLCBuZXh0KSB7CiAgdmFyIGlkID0gcmVxLnBhcmFtcy5pZDsKICB2YXIgbmFtZSA9IHJlcS5ib2R5Lm5hbWU7CiAgdmFyIHBob25lTnVtYmVyID0gcmVxLmJvZHkucGhvbmVOdW1iZXI7CiAgdmFyIG5vdGlmaWNhdGlvbiA9IHJlcS5ib2R5Lm5vdGlmaWNhdGlvbjsKICB2YXIgdGltZVpvbmUgPSByZXEuYm9keS50aW1lWm9uZTsKICB2YXIgdGltZSA9IG1vbWVudChyZXEuYm9keS50aW1lLCAiTU0tREQtWVlZWSBoaDptbWEiKTsKCiAgQXBwb2ludG1lbnQuZmluZE9uZSh7IF9pZDogaWQgfSkKICAgIC50aGVuKGZ1bmN0aW9uIChhcHBvaW50bWVudCkgewogICAgICBhcHBvaW50bWVudC5uYW1lID0gbmFtZTsKICAgICAgYXBwb2ludG1lbnQucGhvbmVOdW1iZXIgPSBwaG9uZU51bWJlcjsKICAgICAgYXBwb2ludG1lbnQubm90aWZpY2F0aW9uID0gbm90aWZpY2F0aW9uOwogICAgICBhcHBvaW50bWVudC50aW1lWm9uZSA9IHRpbWVab25lOwogICAgICBhcHBvaW50bWVudC50aW1lID0gdGltZTsKCiAgICAgIGFwcG9pbnRtZW50LnNhdmUoKQogICAgICAgIC50aGVuKGZ1bmN0aW9uICgpIHsKICAgICAgICAgIHJlcy5yZWRpcmVjdCgnLycpOwogICAgICAgIH0pOwogICAgfSk7Cn0pOwoKLy8gUE9TVDogL2FwcG9pbnRtZW50cy86aWQvZGVsZXRlCnJvdXRlci5wb3N0KCcvOmlkL2RlbGV0ZScsIGZ1bmN0aW9uKHJlcSwgcmVzLCBuZXh0KSB7CiAgdmFyIGlkID0gcmVxLnBhcmFtcy5pZDsKCiAgQXBwb2ludG1lbnQucmVtb3ZlKHsgX2lkOiBpZCB9KQogICAgLnRoZW4oZnVuY3Rpb24gKCkgewogICAgICByZXMucmVkaXJlY3QoJy8nKTsKICAgIH0pOwp9KTsKCm1vZHVsZS5leHBvcnRzID0gcm91dGVyOwo=</textarea>
+<textarea class="saurus-file" data-file="scheduler.js" data-mode="javascript">dmFyIENyb25Kb2IgPSByZXF1aXJlKCdjcm9uJykuQ3JvbkpvYjsKdmFyIG5vdGlmaWNhdGlvbnNXb3JrZXIgPSByZXF1aXJlKCcuL3dvcmtlcnMvbm90aWZpY2F0aW9uc1dvcmtlcicpOwp2YXIgbW9tZW50ID0gcmVxdWlyZSgnbW9tZW50Jyk7Cgp2YXIgc2NoZWR1bGVyRmFjdG9yeSA9ICBmdW5jdGlvbigpewogIHJldHVybiB7CiAgICBzdGFydDogZnVuY3Rpb24oKXsKICAgICAgbmV3IENyb25Kb2IoJzAwICogKiAqICogKicsIGZ1bmN0aW9uKCkgewogICAgICAgIGNvbnNvbGUubG9nKCdSdW5uaW5nIFNlbmQgTm90aWZpY2F0aW9ucyBXb3JrZXIgZm9yICcgKyAgbW9tZW50KCkuZm9ybWF0KCkpOwogICAgICAgIG5vdGlmaWNhdGlvbnNXb3JrZXIucnVuKCk7CiAgICAgIH0sIG51bGwsIHRydWUsICcnKTsKICAgIH0KICB9Owp9OwoKbW9kdWxlLmV4cG9ydHMgPSBzY2hlZHVsZXJGYWN0b3J5KCk7Cg==</textarea>
+<textarea class="saurus-file" data-file="workers/notificationsWorker.js" data-mode="javascript">dmFyIEFwcG9pbnRtZW50ID0gcmVxdWlyZSgnLi4vbW9kZWxzL2FwcG9pbnRtZW50JykKCnZhciBub3RpZmljYXRpb25Xb3JrZXJGYWN0b3J5ID0gIGZ1bmN0aW9uKCl7CiAgcmV0dXJuIHsKICAgIHJ1bjogZnVuY3Rpb24oKXsKICAgICAgQXBwb2ludG1lbnQuc2VuZE5vdGlmaWNhdGlvbnMoKTsKICAgIH0KICB9Owp9OwoKbW9kdWxlLmV4cG9ydHMgPSBub3RpZmljYXRpb25Xb3JrZXJGYWN0b3J5KCk7Cg==</textarea>
+<textarea class="saurus-file" data-file="models/appointment.js" data-mode="javascript">dmFyIG1vbmdvb3NlID0gcmVxdWlyZSgnbW9uZ29vc2UnKTsKdmFyIG1vbWVudCA9IHJlcXVpcmUoJ21vbWVudCcpOwp2YXIgY2ZnID0gcmVxdWlyZSgnLi4vY29uZmlnJyk7CnZhciB0d2lsaW8gPSByZXF1aXJlKCd0d2lsaW8nKTsKCnZhciBBcHBvaW50bWVudFNjaGVtYSA9IG5ldyBtb25nb29zZS5TY2hlbWEoewogIG5hbWU6U3RyaW5nLAogIHBob25lTnVtYmVyOiBTdHJpbmcsCiAgbm90aWZpY2F0aW9uIDogTnVtYmVyLAogIHRpbWVab25lIDogU3RyaW5nLAogIHRpbWUgOiB7dHlwZSA6IERhdGUsIGluZGV4IDogdHJ1ZX0KfSk7CgpBcHBvaW50bWVudFNjaGVtYS5tZXRob2RzLnJlcXVpcmVzTm90aWZpY2F0aW9uID0gZnVuY3Rpb24gKGRhdGUpIHsKICByZXR1cm4gTWF0aC5yb3VuZChtb21lbnQuZHVyYXRpb24obW9tZW50KHRoaXMudGltZSkudHoodGhpcy50aW1lWm9uZSkudXRjKCkKICAgICAgICAgICAgICAgICAgICAgICAgICAuZGlmZihtb21lbnQoZGF0ZSkudXRjKCkpCiAgICAgICAgICAgICAgICAgICAgICAgICkuYXNNaW51dGVzKCkpID09PSB0aGlzLm5vdGlmaWNhdGlvbjsKfTsKCkFwcG9pbnRtZW50U2NoZW1hLnN0YXRpY3Muc2VuZE5vdGlmaWNhdGlvbnMgPSBmdW5jdGlvbihjYWxsYmFjaykgewoKICAvLyBub3cKICB2YXIgc2VhcmNoRGF0ZSA9IG5ldyBEYXRlKCk7CiAgQXBwb2ludG1lbnQKICAgIC5maW5kKCkKICAgIC50aGVuKGZ1bmN0aW9uIChhcHBvaW50bWVudHMpIHsKICAgICAgYXBwb2ludG1lbnRzID0gYXBwb2ludG1lbnRzLmZpbHRlcihmdW5jdGlvbihhcHBvaW50bWVudCkgewogICAgICAgICAgICAgIHJldHVybiBhcHBvaW50bWVudC5yZXF1aXJlc05vdGlmaWNhdGlvbihzZWFyY2hEYXRlKTsKICAgICAgfSk7CiAgICAgIGlmIChhcHBvaW50bWVudHMubGVuZ3RoID4gMCkgewogICAgICAgIHNlbmROb3RpZmljYXRpb25zKGFwcG9pbnRtZW50cyk7CiAgICAgIH0KICAgIH0pOwoKICAgIC8vIFNlbmQgbWVzc2FnZXMgdG8gYWxsIGFwcG9pbm1lbnQgb3duZXJzIHZpYSBUd2lsaW8KICAgIGZ1bmN0aW9uIHNlbmROb3RpZmljYXRpb25zKGRvY3MpIHsKICAgICAgICB2YXIgY2xpZW50ID0gbmV3IHR3aWxpby5SZXN0Q2xpZW50KGNmZy50d2lsaW9BY2NvdW50U2lkLCBjZmcudHdpbGlvQXV0aFRva2VuKTsKICAgICAgICBkb2NzLmZvckVhY2goZnVuY3Rpb24oYXBwb2ludG1lbnQpIHsKICAgICAgICAgICAgLy8gQ3JlYXRlIG9wdGlvbnMgdG8gc2VuZCB0aGUgbWVzc2FnZQogICAgICAgICAgICB2YXIgb3B0aW9ucyA9IHsKICAgICAgICAgICAgICAgIHRvOiAiKyIgKyBhcHBvaW50bWVudC5waG9uZU51bWJlciwKICAgICAgICAgICAgICAgIGZyb206IGNmZy50d2lsaW9QaG9uZU51bWJlciwKICAgICAgICAgICAgICAgIGJvZHk6ICJIaSAiICsgYXBwb2ludG1lbnQubmFtZSArICIuIEp1c3QgYSByZW1pbmRlciB0aGF0IHlvdSBoYXZlIGFuIGFwcG9pbnRtZW50IGNvbWluZyB1cCAgIiArIG1vbWVudChhcHBvaW50bWVudC50aW1lKS5jYWxlbmRhcigpICsiLiIKICAgICAgICAgICAgfTsKCiAgICAgICAgICAgIC8vIFNlbmQgdGhlIG1lc3NhZ2UhCiAgICAgICAgICAgIGNsaWVudC5zZW5kTWVzc2FnZShvcHRpb25zLCBmdW5jdGlvbihlcnIsIHJlc3BvbnNlKSB7CiAgICAgICAgICAgICAgICBpZiAoZXJyKSB7CiAgICAgICAgICAgICAgICAgICAgLy8gSnVzdCBsb2cgaXQgZm9yIG5vdwogICAgICAgICAgICAgICAgICAgIGNvbnNvbGUuZXJyb3IoZXJyKTsKICAgICAgICAgICAgICAgIH0gZWxzZSB7CiAgICAgICAgICAgICAgICAgICAgLy8gTG9nIHRoZSBsYXN0IGZldyBkaWdpdHMgb2YgYSBwaG9uZSBudW1iZXIKICAgICAgICAgICAgICAgICAgICB2YXIgbWFza2VkID0gYXBwb2ludG1lbnQucGhvbmVOdW1iZXIuc3Vic3RyKDAsCiAgICAgICAgICAgICAgICAgICAgICAgIGFwcG9pbnRtZW50LnBob25lTnVtYmVyLmxlbmd0aCAtIDUpOwogICAgICAgICAgICAgICAgICAgIG1hc2tlZCArPSAnKioqKionOwogICAgICAgICAgICAgICAgICAgIGNvbnNvbGUubG9nKCdNZXNzYWdlIHNlbnQgdG8gJyArIG1hc2tlZCk7CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0pOwogICAgICAgIH0pOwoKICAgICAgICAvLyBEb24ndCB3YWl0IG9uIHN1Y2Nlc3MvZmFpbHVyZSwganVzdCBpbmRpY2F0ZSBhbGwgbWVzc2FnZXMgaGF2ZSBiZWVuCiAgICAgICAgLy8gcXVldWVkIGZvciBkZWxpdmVyeQogICAgICAgIGlmIChjYWxsYmFjaykgewogICAgICAgICAgY2FsbGJhY2suY2FsbCh0aGlzKTsKICAgICAgICB9CiAgICB9Cn07CgoKdmFyIEFwcG9pbnRtZW50ID0gbW9uZ29vc2UubW9kZWwoJ2FwcG9pbnRtZW50JywgQXBwb2ludG1lbnRTY2hlbWEpOwptb2R1bGUuZXhwb3J0cyA9IEFwcG9pbnRtZW50Owo=</textarea>
+</div>
+</div><div class="saurus-overview"><ul></ul></div></div><div class="saurus-code"><div class="file-path"><span class="crumb-container"></span><i class="fa fa-fw fa-folder"></i></div><div class="saurus-editor"></div></div><div class="saurus-explorer"><div class="saurus-file-list"></div><a href="https://github.com/TwilioDevEd/appointment-reminders-node" target="_blank" class="explorer-get-code"> <i class="fa fa-lg fa-github-square"> </i>View Code on GitHub</a></div></div></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script><script src="ace/ace.js"></script><script src="ace/theme-monokai.js"></script><script src="viewsaurus.js"></script></body></html>
