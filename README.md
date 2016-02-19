@@ -26,6 +26,7 @@ should also install [npm](https://www.npmjs.com/).
    ```
 
 To run the app locally:
+
 1. First clone this repository and `cd` into its directory:
    ```bash
    git clone git@github.com:TwilioDevEd/appointment-reminders-node.git
