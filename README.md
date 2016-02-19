@@ -40,6 +40,7 @@ To run the app locally:
     ```
 
 4. Edit the sample configuration file `.env` to match your configuration.
+Remember to set your MongoDb connection strings for both environments.
 
    Once you have edited the `.env` file, if you are using a UNIX operating system, just use the source command to load the variables into your environment:
 
