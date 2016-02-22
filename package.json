@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "test": "export NODE_ENV=test && mocha test"
   },
-  "descrption":"Node implementation of Appointment Reminders",
+  "description":"Node implementation of Appointment Reminders",
   "author": {
     "name": "Omar Ahmed",
     "email": "neb.trx@gmail.com"
