@@ -10,15 +10,15 @@
   height:100%;
   width:100%;
 }</style><link rel="shortcut icon" href="//twilio.com/bundles/marketing/img/favicons/favicon.ico"><link rel="apple-touch-icon" href="//twilio.com/bundles/marketing/img/favicons/favicon_57.png"><link rel="apple-touch-icon" sizes="72x72" href="//twilio.com/bundles/marketing/img/favicons/favicon_72.png"><link rel="apple-touch-icon" sizes="114x114" href="//twilio.com/bundles/marketing/img/favicons/favicon_114.png"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"><link rel="stylesheet" href="viewsaurus.css"></head><body><div class="wrapper"><div id="viewsaurus" data-title="Appointment Reminders"><div class="saurus-panes"><div class="saurus-prose"><div class="saurus-prose-header"><div class="title-outer"><span class="step-title">Appointment Reminders</span></div></div><div class="saurus-nav-buttons"><div class="saurus-nav-button nav-overview"><div class="saurus-nav-button-inner"><i class="fa fa-fw fa-list"></i></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-previous"><div class="saurus-nav-button-inner"><a href=""> <i class="fa fa-fw fa-play fa-rotate-180"></i></a></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-next clickable"><div class="saurus-nav-button-inner"><a href="#1"> <i class="fa fa-fw fa-play"></i></a></div></div><div class="saurus-next-title"><span class="next-title-inner"></span></div></div><div class="saurus-progress-bar"></div><div class="saurus-start"><p>Learn to implement appointment reminders in your web app with Twilio. Appointment reminders allow you to automate the process of reaching out to your customers in advance of an upcoming appointment.</p><a href="#0">Start Tutorial</a></div><div class="saurus-content"><div data-title="Appointment Reminders with Twilio and Node.js" class="chapter"><div data-file="app.js" class="step"><h2 id="what-does-this-thing-do-">What does this thing do?</h2>
-<p> This Node.js <a href="//expressjs.com/en/index.html">Express</a> web application shows how to create
-appointments for customers at a date in future, and send out reminders for
-those appointments in a background job that runs every few minutes. </p>
-<p>In this tutorial, we&#39;ll point out the key bits of code that make this application
+<p>This Node.js <a href="//expressjs.com/en/index.html">Express</a> web application sends out reminders for
+future appointments that customers can create through the application as well. This is done
+through a background job that runs every minute.</p>
+<p>On this tutorial we&#39;ll point out the key bits of code that make this application
 work. <a href="https://github.com/TwilioDevEd/appointment-reminders-node">Check out the project README on GitHub</a>
-to see how to run the code yourself. </p>
+to see how to run the code yourself.</p>
 <p>Let&#39;s get started! Click the right arrow above to advance to the next code snippet.</p>
 <hr>
-<p><strong>See Also:</strong> </p>
+<p><strong>See Also:</strong></p>
 <ul>
 <li><a href="//www.twilio.com/docs/node/install">The Twilio Node Helper Library</a></li>
 <li><a href="//www.twilio.com/docs/client">Twilio Client docs</a></li>
@@ -26,22 +26,22 @@ to see how to run the code yourself. </p>
 <li><a href="//www.twilio.com/docs/node/install">The Twilio Node Helper Library</a></li>
 </ul>
 </div><div data-file=".env" data-highlight="1-3" class="step"><h2 id="configure-the-application-to-use-twilio">Configure the application to use Twilio</h2>
-<p>Before we can use the Twilio API to send reminder text messages, we need to 
-configure our account credentials. These can be found on your 
+<p>Before we can use the Twilio API to send reminder text messages we need to
+configure our account credentials. These can be found on your
 <a href="https://www.twilio.com/user/account/voice">Twilio dashboard</a>.
-You&#39;ll also need an SMS-enabled phone number - you can find or purchase a 
-new one to use <a href="https://www.twilio.com/user/account/phone-numbers/incoming">here</a>.</p>
+You&#39;ll also need an SMS-enabled phone number - you can find or purchase a
+new one <a href="https://www.twilio.com/user/account/phone-numbers/incoming">here</a>.</p>
 <hr>
-<p><strong>See Also:</strong> </p>
+<p><strong>See Also:</strong></p>
 <ul>
 <li><a href="https://www.twilio.com/user/account">Your Account SID and Auth Token</a></li>
 <li><a href="https://www.twilio.com/user/account/phone-numbers/incoming">Your Available Phone Numbers</a></li>
 </ul>
 </div><div data-file="routes/appointments.js" data-highlight="25-38" class="step"><h2 id="create-a-new-appointment">Create a new appointment</h2>
-<p>In order to send an appointment reminder, we first need to create an
-appointment! In the controller, we take information
-(notably a customer&#39;s name and phone number, plus a time for the appointment 
-in the future) and save it in an <code>Appointment</code> model.</p>
+<p>In order to send an appointment reminder we need to have an
+appointment first! On the controller we input the information required
+(a customer&#39;s name and phone number, plus a time and date for
+the appointment) by saving it on an <code>Appointment</code> model.</p>
 <pre><code>...
 
 var AppointmentSchema = new mongoose.Schema({
@@ -60,28 +60,28 @@ var AppointmentSchema = new mongoose.Schema({
 <li><a href="//mongoosejs.com/docs/index.html">Quick start with mongoose</a></li>
 </ul>
 </div><div data-file="scheduler.js" class="step"><h2 id="schedule-a-job-to-send-reminders">Schedule a job to send reminders</h2>
-<p>Once in a minute, we&#39;d like our application to check the appointments database
+<p>Every minute we&#39;d like our application to check the appointments database
 to see if any appointments are coming up that require reminders to be sent out.
-We configure both the job code we&#39;d like to run and the interval on which to
-run inside the start function. The we call it from the application execution 
+We configure on the start function both the job code we&#39;d like to run,
+and the interval on which to run it. Then we call it from the application execution
 entry point like this: <code>scheduler.start()</code></p>
 <hr>
-<p><strong>See Also:</strong> </p>
+<p><strong>See Also:</strong></p>
 <ul>
 <li><a href="https://github.com/ncb000gt/node-cron">Task Scheduling with node-cron</a></li>
 </ul>
 </div><div data-file="workers/notificationsWorker.js" class="step"><h2 id="create-a-worker-function-to-run-the-job">Create a worker function to run the job</h2>
-<p>To actually execute our recurring job logic, we create a worker function 
-which uses a <a href="//mongoosejs.com/docs/guide.html#statics">Static Model Method</a> 
+<p>To actually execute our recurring job logic, we create a worker function
+which uses a <a href="//mongoosejs.com/docs/guide.html#statics">Static Model Method</a>
 to query the database for upcoming appointments and sends reminders as necessary.</p>
 </div><div data-file="models/appointment.js" data-highlight="14-18, 20-67" class="step"><h2 id="find-appointments-that-need-reminders">Find appointments that need reminders</h2>
-<p>Our recurring job uses an static model method of the <code>Appointment</code> model to
+<p>Our recurring job uses a static model method of the <code>Appointment</code> model to
 query the database for appointments coming up in the current minute and
 send out reminder messages using a
-<a href="//twilio.github.io/twilio-node/#restapi">Twilio REST Client</a> 
+<a href="//twilio.github.io/twilio-node/#restapi">Twilio REST Client</a>
 we previously initialized with our Twilio account credentials.</p>
-<p>As appoinments are defined in differents time zones, we used 
-<a href="//momentjs.com/">Moment.js library</a> in order to properly 
+<p>Because of the fact that appointments are defined in different time zones,
+we use <a href="//momentjs.com/">Moment.js library</a> in order to properly
 query every upcoming appointment considering its time zone.</p>
 <hr>
 <p><strong> See Also:</strong></p>
@@ -90,17 +90,17 @@ query every upcoming appointment considering its time zone.</p>
 </ul>
 </div><div data-file="models/appointment.js" data-highlight="38-59" class="step"><h2 id="send-reminder-messages-with-the-twilio-api">Send reminder messages with the Twilio API</h2>
 <p>This code is called for every appointment coming up that
-requires a reminder to be sent. We provide a configuration object with a <code>to</code> 
+requires a reminder to be sent. We provide a configuration object with a <code>to</code>
 field, which is the customer&#39;s phone number, a <code>from</code>
 field, which is a <a href="https://www.twilio.com/user/account/phone-numbers/incoming">number in our account</a>,
 and a <code>body</code> field, which contains the text of the message. Then we pass it
 to the <code>sendMessage</code> method along with a callback to log errors and success.</p>
 </div><div class="step"><h2 id="where-to-next-">Where to next?</h2>
 <p>That&#39;s it! Our application is all set to send out reminders for
-upcoming appointments. We hope you found this sample application useful. 
-If you&#39;re a Node.js/Express developer working with Twilio, you might enjoy these other tutorials:</p>
+upcoming appointments. We hope you found this sample application useful.
+If you&#39;re a Node.js/Express developer working with Twilio you might enjoy these other tutorials:</p>
 <h3 id="-workflow-automation-www-twilio-com-docs-tutorials-walkthrough-workflow-automation-node-express-"><a href="//www.twilio.com/docs/tutorials/walkthrough/workflow-automation/node/express">Workflow Automation</a></h3>
-<p>Build a ready-for-scale automated SMS workflow, for a vacation rental company.</p>
+<p>Build a ready-for-scale automated SMS workflow for a vacation rental company.</p>
 <h3 id="-browser-calls-www-twilio-com-docs-tutorials-walkthrough-browser-calls-node-express-"><a href="//www.twilio.com/docs/tutorials/walkthrough/browser-calls/node/express">Browser Calls</a></h3>
 <p>Make browser-to-phone and browser-to-browser calls with ease.</p>
 <h3 id="did-this-help-">Did this help?</h3>
