@@ -3,54 +3,54 @@
     :markdown
       ## What does this thing do?
 
-       This Node.js [Express](//expressjs.com/en/index.html) web application shows how to create
-      appointments for customers at a date in future, and send out reminders for
-      those appointments in a background job that runs every few minutes. 
+      This Node.js [Express](//expressjs.com/en/index.html) web application sends out reminders for
+      future appointments that customers can create through the application as well. This is done
+      through a background job that runs every minute.
 
-      In this tutorial, we'll point out the key bits of code that make this application
+      On this tutorial we'll point out the key bits of code that make this application
       work. [Check out the project README on GitHub](https://github.com/TwilioDevEd/appointment-reminders-node)
-      to see how to run the code yourself. 
+      to see how to run the code yourself.
 
       Let's get started! Click the right arrow above to advance to the next code snippet.
 
       ---
 
-      **See Also:** 
+      **See Also:**
       * [The Twilio Node Helper Library](//www.twilio.com/docs/node/install)
       * [Twilio Client docs](//www.twilio.com/docs/client)
       * [Getting Started with Express](//expressjs.com/en/starter/installing.html)
       * [The Twilio Node Helper Library](//www.twilio.com/docs/node/install)
 
-      
+
   .step(data-file='.env', data-highlight='1-3')
     :markdown
       ## Configure the application to use Twilio
 
-      Before we can use the Twilio API to send reminder text messages, we need to 
-      configure our account credentials. These can be found on your 
+      Before we can use the Twilio API to send reminder text messages we need to
+      configure our account credentials. These can be found on your
       [Twilio dashboard](https://www.twilio.com/user/account/voice).
-      You'll also need an SMS-enabled phone number - you can find or purchase a 
-      new one to use [here](https://www.twilio.com/user/account/phone-numbers/incoming).
+      You'll also need an SMS-enabled phone number - you can find or purchase a
+      new one [here](https://www.twilio.com/user/account/phone-numbers/incoming).
 
       ---
 
-      **See Also:** 
+      **See Also:**
       * [Your Account SID and Auth Token](https://www.twilio.com/user/account)
       * [Your Available Phone Numbers](https://www.twilio.com/user/account/phone-numbers/incoming)
-      
+
   .step(data-file='routes/appointments.js',
     data-highlight='25-38')
     :markdown
       ## Create a new appointment
 
-      In order to send an appointment reminder, we first need to create an
-      appointment! In the controller, we take information
-      (notably a customer's name and phone number, plus a time for the appointment 
-      in the future) and save it in an `Appointment` model.
-      
+      In order to send an appointment reminder we need to have an
+      appointment first! On the controller we input the information required
+      (a customer's name and phone number, plus a time and date for
+      the appointment) by saving it on an `Appointment` model.
+
       ```
       ...
-      
+
       var AppointmentSchema = new mongoose.Schema({
         name:String,
         phoneNumber: String,
@@ -60,38 +60,38 @@
       });
 
       ...
-      
+
       ```
 
       ---
-      
+
       **See also:**
 
       * [Install guide for MongoDB](//docs.mongodb.org/manual/installation/)
       * [Quick start with mongoose](//mongoosejs.com/docs/index.html)
-      
+
   .step(data-file='scheduler.js')
     :markdown
       ## Schedule a job to send reminders
 
-      Once in a minute, we'd like our application to check the appointments database
+      Every minute we'd like our application to check the appointments database
       to see if any appointments are coming up that require reminders to be sent out.
-      We configure both the job code we'd like to run and the interval on which to
-      run inside the start function. The we call it from the application execution 
+      We configure on the start function both the job code we'd like to run,
+      and the interval on which to run it. Then we call it from the application execution
       entry point like this: `scheduler.start()`
-      
+
       ---
 
-      **See Also:** 
+      **See Also:**
       * [Task Scheduling with node-cron](https://github.com/ncb000gt/node-cron)
-      
-      
+
+
   .step(data-file='workers/notificationsWorker.js')
     :markdown
       ## Create a worker function to run the job
 
-      To actually execute our recurring job logic, we create a worker function 
-      which uses a [Static Model Method](//mongoosejs.com/docs/guide.html#statics) 
+      To actually execute our recurring job logic, we create a worker function
+      which uses a [Static Model Method](//mongoosejs.com/docs/guide.html#statics)
       to query the database for upcoming appointments and sends reminders as necessary.
 
 
@@ -100,21 +100,21 @@
     :markdown
       ## Find appointments that need reminders
 
-      Our recurring job uses an static model method of the `Appointment` model to
+      Our recurring job uses a static model method of the `Appointment` model to
       query the database for appointments coming up in the current minute and
       send out reminder messages using a
-      [Twilio REST Client](//twilio.github.io/twilio-node/#restapi) 
+      [Twilio REST Client](//twilio.github.io/twilio-node/#restapi)
       we previously initialized with our Twilio account credentials.
-      
-      As appoinments are defined in differents time zones, we used 
-      [Moment.js library](//momentjs.com/) in order to properly 
+
+      Because of the fact that appointments are defined in different time zones,
+      we use [Moment.js library](//momentjs.com/) in order to properly
       query every upcoming appointment considering its time zone.
-      
+
       ---
-      
+
       ** See Also:**
       * [Moment.js Documentation](//momentjs.com/docs/)
-      
+
 
   .step(data-file='models/appointment.js',
     data-highlight='38-59')
@@ -122,30 +122,27 @@
       ## Send reminder messages with the Twilio API
 
       This code is called for every appointment coming up that
-      requires a reminder to be sent. We provide a configuration object with a `to` 
+      requires a reminder to be sent. We provide a configuration object with a `to`
       field, which is the customer's phone number, a `from`
       field, which is a [number in our account](https://www.twilio.com/user/account/phone-numbers/incoming),
       and a `body` field, which contains the text of the message. Then we pass it
       to the `sendMessage` method along with a callback to log errors and success.
-      
+
   .step
     :markdown
       ## Where to next?
 
       That's it! Our application is all set to send out reminders for
-      upcoming appointments. We hope you found this sample application useful. 
-      If you're a Node.js/Express developer working with Twilio, you might enjoy these other tutorials:
+      upcoming appointments. We hope you found this sample application useful.
+      If you're a Node.js/Express developer working with Twilio you might enjoy these other tutorials:
 
-      ### [Workflow Automation](//www.twilio.com/docs/tutorials/walkthrough/workflow-automation/node/express)  
-      Build a ready-for-scale automated SMS workflow, for a vacation rental company.
+      ### [Workflow Automation](//www.twilio.com/docs/tutorials/walkthrough/workflow-automation/node/express)
+      Build a ready-for-scale automated SMS workflow for a vacation rental company.
 
-      ### [Browser Calls](//www.twilio.com/docs/tutorials/walkthrough/browser-calls/node/express) 
+      ### [Browser Calls](//www.twilio.com/docs/tutorials/walkthrough/browser-calls/node/express)
       Make browser-to-phone and browser-to-browser calls with ease.
 
       ### Did this help?
       As always, we'd love to hear what you thought of this tutorial!
       [Shoot us a note](mailto:devedoss@twilio.com) to let us know what you liked
       and what we can do better. See you next time!
-
-
-  
