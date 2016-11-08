@@ -1,15 +1,19 @@
+<a href="https://www.twilio.com">
+  <img src="https://static0.twilio.com/marketing/bundles/marketing/img/logos/wordmark-red.svg" alt="Twilio" width="250" />
+</a>
+
 # Appointment Reminders. Powered by Twilio - Node.js/Express
 
 [![Build
 Status](https://travis-ci.org/TwilioDevEd/appointment-reminders-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/appointment-reminders-node)
 
 
-Use Twilio to create automatic appointment reminders for your business users.
+Use Twilio to create automatic appointment reminders for your business users. For a step-by-step tutorial click [here](https://www.twilio.com/docs/tutorials/walkthrough/appointment-reminders/node/express).
 
 
 ## Local development
 
-First you need to install [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.com/).
+First you need to install [Node.js](http://nodejs.org/).
 
 1. This sample application stores data in a [MongoDB](https://www.mongodb.org/) database using [Mongoose](http://mongoosejs.com/). You can   download and run MongoDB yourself (on OS X, Linux or Windows).
 
@@ -61,7 +65,7 @@ To run the app locally:
 
     ```bash
     $ npm install -g nodemon
-    $ nodemon .
+    $ nodemon ./bin/www
     ```
 
 1. Check it out at [http://localhost:3000](http://localhost:3000)
@@ -73,7 +77,7 @@ That's it
 You can run the tests locally by typing
 
 ```bash
-$ mocha test
+$ npm run test
 ```
 
 ## Meta
