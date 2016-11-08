@@ -8,7 +8,7 @@
 Status](https://travis-ci.org/TwilioDevEd/appointment-reminders-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/appointment-reminders-node)
 
 
-Use Twilio to create automatic appointment reminders for your business users. For a step-by-step tutorial click [here](https://www.twilio.com/docs/tutorials/walkthrough/appointment-reminders/node/express).
+Use Twilio to create automatic appointment reminders for your business users. For a step-by-step tutorial see [twilio docs](https://www.twilio.com/docs/tutorials/walkthrough/appointment-reminders/node/express).
 
 
 ## Local development
