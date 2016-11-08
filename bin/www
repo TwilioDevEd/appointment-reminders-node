@@ -93,4 +93,4 @@ function onListening() {
 
 
 mongoose.connect(cfg.mongoUrl);
-mongoose.Promise = require('bluebird');
+mongoose.Promise = Promise;

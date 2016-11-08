@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var cfg = require('../config');
+const mongoose = require("mongoose");
+const cfg = require("../config");
 
 exports.mongoConnection = mongoose.connect(cfg.mongoUrlTest);
-mongoose.Promise = require('bluebird');
+mongoose.Promise = Promise;
