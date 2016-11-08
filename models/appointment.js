@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
 var cfg = require('../config');
-var twilio = require('twilio');
+var Twilio = require('twilio');
 
 var AppointmentSchema = new mongoose.Schema({
   name:String,
@@ -34,17 +34,19 @@ AppointmentSchema.statics.sendNotifications = function(callback) {
 
     // Send messages to all appoinment owners via Twilio
     function sendNotifications(docs) {
-        var client = new twilio.RestClient(cfg.twilioAccountSid, cfg.twilioAuthToken);
+        var client = new Twilio(cfg.twilioAccountSid, cfg.twilioAuthToken);
         docs.forEach(function(appointment) {
+            const msgDate = moment(appointment.time).calendar();
             // Create options to send the message
             var options = {
                 to: "+" + appointment.phoneNumber,
                 from: cfg.twilioPhoneNumber,
-                body: "Hi " + appointment.name + ". Just a reminder that you have an appointment coming up  " + moment(appointment.time).calendar() +"."
+                body: `Hi ${appointment.name}. Just a reminder that`
+                      + ` you have an appointment coming up.`
             };
 
             // Send the message!
-            client.sendMessage(options, function(err, response) {
+            client.messages.create(options, function(err, response) {
                 if (err) {
                     // Just log it for now
                     console.error(err);
