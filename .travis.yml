@@ -4,8 +4,6 @@ node_js:
 - 'stable'
 - '5.12.0'
 - '4.6.0'
-install:
-- npm install
 services: mongodb
 env:
   global:
