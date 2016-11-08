@@ -8,7 +8,7 @@
       through a background job that runs every minute.
 
       On this tutorial we'll point out the key bits of code that make this application
-      work. [Check out the project README on GitHub](https://github.com/TwilioDevEd/appointment-reminders-node)
+      work. [Check out the project README on GitHub](//github.com/TwilioDevEd/appointment-reminders-node)
       to see how to run the code yourself.
 
       Let's get started! Click the right arrow above to advance to the next code snippet.
@@ -28,15 +28,15 @@
 
       Before we can use the Twilio API to send reminder text messages we need to
       configure our account credentials. These can be found on your
-      [Twilio dashboard](https://www.twilio.com/user/account/voice).
+      [Twilio dashboard](//www.twilio.com/user/account/voice).
       You'll also need an SMS-enabled phone number - you can find or purchase a
-      new one [here](https://www.twilio.com/user/account/phone-numbers/incoming).
+      new one [here](//www.twilio.com/user/account/phone-numbers/incoming).
 
       ---
 
       **See Also:**
-      * [Your Account SID and Auth Token](https://www.twilio.com/user/account)
-      * [Your Available Phone Numbers](https://www.twilio.com/user/account/phone-numbers/incoming)
+      * [Your Account SID and Auth Token](//www.twilio.com/user/account)
+      * [Your Available Phone Numbers](//www.twilio.com/user/account/phone-numbers/incoming)
 
   .step(data-file='routes/appointments.js',
     data-highlight='25-38')
@@ -83,7 +83,7 @@
       ---
 
       **See Also:**
-      * [Task Scheduling with node-cron](https://github.com/ncb000gt/node-cron)
+      * [Task Scheduling with node-cron](//github.com/ncb000gt/node-cron)
 
 
   .step(data-file='workers/notificationsWorker.js')
@@ -96,7 +96,7 @@
 
 
   .step(data-file='models/appointment.js',
-    data-highlight='14-18, 20-67')
+    data-highlight='14-18, 20-69')
     :markdown
       ## Find appointments that need reminders
 
@@ -117,14 +117,14 @@
 
 
   .step(data-file='models/appointment.js',
-    data-highlight='38-59')
+    data-highlight='38-61')
     :markdown
       ## Send reminder messages with the Twilio API
 
       This code is called for every appointment coming up that
       requires a reminder to be sent. We provide a configuration object with a `to`
       field, which is the customer's phone number, a `from`
-      field, which is a [number in our account](https://www.twilio.com/user/account/phone-numbers/incoming),
+      field, which is a [number in our account](//www.twilio.com/user/account/phone-numbers/incoming),
       and a `body` field, which contains the text of the message. Then we pass it
       to the `sendMessage` method along with a callback to log errors and success.
 
@@ -143,6 +143,6 @@
       Make browser-to-phone and browser-to-browser calls with ease.
 
       ### Did this help?
-      As always, we'd love to hear what you thought of this tutorial!
-      [Shoot us a note](mailto:devedoss@twilio.com) to let us know what you liked
-      and what we can do better. See you next time!
+      Thanks for checking out this tutorial! If you have any feedback
+      to share with us, we'd love to hear it. [Contact the Twilio Developer
+      Education Team](mailto:deved-oss@twilio.com) to let us know what you think.
