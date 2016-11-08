@@ -40,15 +40,16 @@ To run the app locally:
     $ npm install
     ```
 
-4. Edit the sample configuration file `.env` to match your configuration.
-   Remember to set your MongoDb connection strings for both environments.
+1. Copy the sample configuration file and edit it to match your configuration
 
-   If you are using a UNIX operating system, once you have edited the `.env` file,
-   use the source command to load the variables into your environment.
+   ```bash
+   $ cp .env .env.local
+   ```
+   You can find your `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` in your
+   [Twilio Account Settings](https://www.twilio.com/console).
+   You will also need a `TWILIO_PHONE_NUMBER`, which you may find [here](https://www.twilio.com/console/phone-numbers/incoming).
 
-  ```bash
-  $ source .env
-  ```
+   Run `source .env.local` to export the environment variables
 
 1. Run the application
 
