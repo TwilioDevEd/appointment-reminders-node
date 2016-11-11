@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "export NODE_ENV=test && mocha test"
+    "test": "NODE_ENV=test && node_modules/mocha/bin/mocha test"
   },
   "description": "Node implementation of Appointment Reminders",
   "author": {
