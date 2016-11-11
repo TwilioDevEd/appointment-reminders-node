@@ -77,7 +77,7 @@ That's it
 You can run the tests locally by typing
 
 ```bash
-$ npm run test
+$ npm test
 ```
 
 ## Meta
