@@ -34,7 +34,7 @@ AppointmentSchema.statics.sendNotifications = function(callback) {
 
     // Send messages to all appoinment owners via Twilio
     function sendNotifications(docs) {
-        var client = new Twilio(cfg.twilioAccountSid, cfg.twilioAuthToken);
+        var client = Twilio(cfg.twilioAccountSid, cfg.twilioAuthToken);
         docs.forEach(function(appointment) {
             const msgDate = moment(appointment.time).calendar();
             // Create options to send the message
