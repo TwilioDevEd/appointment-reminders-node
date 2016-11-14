@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "export NODE_ENV=test && mocha test"
+    "test": "NODE_ENV=test && node_modules/mocha/bin/mocha test"
   },
-  "description":"Node implementation of Appointment Reminders",
+  "description": "Node implementation of Appointment Reminders",
   "author": {
     "name": "Omar Ahmed",
     "email": "neb.trx@gmail.com"
@@ -17,33 +17,36 @@
     "url": "https://github.com/TwilioDevEd/appointment-reminders-node"
   },
   "keywords": [
-   "node",
-   "appointment reminders",
-   "twilio",
-   "express",
-   "sms",
-   "notification"
+    "node",
+    "appointment reminders",
+    "twilio",
+    "express",
+    "sms",
+    "notification"
   ],
-  "engines" : { "node" : ">=4.1.0 <5.5.0" },
+  "engines": {
+    "node": ">=4.1.0 <5.5.0"
+  },
   "dependencies": {
-    "bluebird": "^3.3.1",
-    "body-parser": "~1.13.2",
-    "cookie-parser": "~1.3.5",
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
     "cron": "^1.1.0",
-    "debug": "~2.2.0",
-    "express": "~4.13.1",
+    "debug": "~2.3.0",
+    "express": "~4.14.0",
     "jade": "~1.11.0",
     "moment": "^2.11.2",
     "moment-timezone": "^0.5.0",
     "mongoose": "^4.4.3",
-    "morgan": "~1.6.1",
+    "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
-    "twilio": "^3.3.0-edge"
+    "twilio": "3.0.0-rc.13"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "cheerio": "^0.20.0",
-    "mocha": "^2.4.5",
-    "supertest": "^1.2.0"
+    "cheerio": "^0.22.0",
+    "mocha": "^3.1.2",
+    "mongoose-mock": "^0.4.0",
+    "proxyquire": "^1.7.10",
+    "supertest": "^2.0.1"
   }
 }
