@@ -39,10 +39,9 @@ AppointmentSchema.statics.sendNotifications = function(callback) {
             const msgDate = moment(appointment.time).calendar();
             // Create options to send the message
             var options = {
-                to: "+" + appointment.phoneNumber,
+                to: `+ ${appointment.phoneNumber}`,
                 from: cfg.twilioPhoneNumber,
-                body: `Hi ${appointment.name}. Just a reminder that`
-                      + ` you have an appointment coming up.`
+                body: `Hi ${appointment.name}. Just a reminder that you have an appointment coming up.`,
             };
 
             // Send the message!
@@ -55,7 +54,7 @@ AppointmentSchema.statics.sendNotifications = function(callback) {
                     var masked = appointment.phoneNumber.substr(0,
                         appointment.phoneNumber.length - 5);
                     masked += '*****';
-                    console.log('Message sent to ' + masked);
+                    console.log(`Message sent to ${masked}`);
                 }
             });
         });
