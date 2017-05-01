@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var appointments = require('./routes/appointments');
 var scheduler = require('./scheduler');
+var cfg = require('./config');
 
 var app = express();
 
