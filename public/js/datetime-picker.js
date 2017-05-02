@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    $("#inputDate").datetimepicker({
+    $('#inputDate').datetimepicker({
         sideBySide: true,
-        format: "MM-DD-YYYY hh:mma"
+        format: 'MM-DD-YYYY hh:mma',
     });
-    $("#selectTimeZone").chosen();
+    $('#selectTimeZone').chosen();
 });

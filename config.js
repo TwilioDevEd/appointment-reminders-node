@@ -1,6 +1,8 @@
+'use strict';
+
 require('dotenv-safe').load();
 
-var cfg = {};
+const cfg = {};
 
 // HTTP Port to run our web application
 cfg.port = process.env.PORT || 3000;
@@ -24,8 +26,8 @@ cfg.twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
 // MongoDB connection string - MONGO_URL is for local dev,
 // MONGOLAB_URI is for the MongoLab add-on for Heroku deployment
-cfg.mongoUrl = process.env.MONGOLAB_URI || process.env.MONGO_URL
-cfg.mongoUrlTest = process.env.MONGO_URL_TEST
+cfg.mongoUrl = process.env.MONGOLAB_URI || process.env.MONGO_URL;
+cfg.mongoUrlTest = process.env.MONGO_URL_TEST;
 
 // Export configuration object
 module.exports = cfg;
