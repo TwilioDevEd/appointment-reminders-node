@@ -91,6 +91,9 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+if (!cfg.mongoUrl) {
+  throw new Error("MONGO_URL env variable not set");
+}
 
 mongoose.connect(cfg.mongoUrl);
-mongoose.Promise = require('bluebird');
+mongoose.Promise = Promise;

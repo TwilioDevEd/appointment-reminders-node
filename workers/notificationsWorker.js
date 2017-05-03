@@ -1,10 +1,12 @@
-var Appointment = require('../models/appointment')
+'use strict';
 
-var notificationWorkerFactory =  function(){
+const Appointment = require('../models/appointment');
+
+const notificationWorkerFactory = function() {
   return {
-    run: function(){
+    run: function() {
       Appointment.sendNotifications();
-    }
+    },
   };
 };
 
