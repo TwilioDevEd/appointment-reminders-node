@@ -56,7 +56,7 @@ AppointmentSchema.statics.sendNotifications = function(callback) {
                     console.error(err);
                 } else {
                     // Log the last few digits of a phone number
-                    const masked = appointment.phoneNumber.substr(0,
+                    let masked = appointment.phoneNumber.substr(0,
                         appointment.phoneNumber.length - 5);
                     masked += '*****';
                     console.log(`Message sent to ${masked}`);
