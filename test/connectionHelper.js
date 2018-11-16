@@ -19,5 +19,9 @@ mongoServerInstance.start((error, config) => {
   }
 });
 
-exports.mongoConnection = mongoose.connect(cfg.mongoUrlTest);
+exports.mongoConnection = mongoose.connect(
+    cfg.mongoUrlTest, {
+        useMongoClient: false,
+    }
+);
 mongoose.Promise = Promise;

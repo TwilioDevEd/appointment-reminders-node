@@ -95,5 +95,8 @@ if (!cfg.mongoUrl) {
   throw new Error("MONGO_URL env variable not set");
 }
 
-mongoose.connect(cfg.mongoUrl);
+mongoose.connect(cfg.mongoUrl, {
+  useMongoClient: true,
+});
+
 mongoose.Promise = Promise;

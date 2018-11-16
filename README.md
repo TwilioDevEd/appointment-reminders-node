@@ -47,13 +47,15 @@ To run the app locally:
 1. Copy the sample configuration file and edit it to match your configuration
 
    ```bash
-   cp .env .env.local
+   cp .env.local .env
    ```
    You can find your `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` in your
    [Twilio Account Settings](https://www.twilio.com/console).
    You will also need a `TWILIO_PHONE_NUMBER`, which you may find [here](https://www.twilio.com/console/phone-numbers/incoming).
 
-   Run `source .env.local` to export the environment variables
+   You can reuse the `MONGO_URL_TEST` for `MONGO_URL` for most default installs. Otherwise, use your production Mongo installation.
+
+   Run `source .env` to export the environment variables
 
 1. Run the application
 
