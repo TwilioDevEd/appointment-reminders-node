@@ -25,4 +25,4 @@
     select#selectTimeZone.form-control(name='timeZone', required='', value=appointment.timeZone)
       each zone in timeZones
         option()
-        option(selected=zone == appointment.timeZone, value="#{zone}") !{zone}
+        option(selected=zone == appointment.timeZone, value= zone) !{zone}
