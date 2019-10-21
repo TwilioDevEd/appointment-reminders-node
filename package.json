@@ -48,7 +48,7 @@
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "eslint-config-google": "^0.7.1",
-    "mocha": "^3.1.2",
+    "mocha": "^6.2.2",
     "mongo-in-memory": "0.0.5",
     "proxyquire": "^1.7.10",
     "supertest": "^2.0.1"
