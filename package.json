@@ -37,9 +37,9 @@
     "express": "~4.14.0",
     "moment": "^2.11.2",
     "moment-timezone": "^0.5.0",
-    "mongoose": "^4.4.3",
+    "mongoose": "^6.0.4",
     "morgan": "~1.7.0",
-    "npm": "^6.4.1",
+    "npm": "^6.10.1",
     "pug": "^2.0.0-beta.12",
     "serve-favicon": "~2.3.0",
     "twilio": "~3.0.0-rc.13"
