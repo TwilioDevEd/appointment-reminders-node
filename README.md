@@ -20,7 +20,10 @@ First you need to install [Node.js](http://nodejs.org/).
    On OS X, maybe the easiest way to get MongoDB running locally is to install it via [Homebrew](http://brew.sh/).
 
    ```bash
-   brew install mongodb
+   brew tap mongodb/brew
+   ```
+   ```bash
+   brew install mongodb-community
    ```
    You should then be able to run a local server with:
 
