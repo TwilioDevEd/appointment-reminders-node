@@ -28,7 +28,7 @@
     "node": ">=6.x"
   },
   "dependencies": {
-    "body-parser": "~1.15.2",
+    "body-parser": "~1.19.0",
     "cookie-parser": "~1.4.3",
     "cron": "^1.1.0",
     "debug": ">=2.6.9",
