@@ -4,8 +4,7 @@
 
 # Appointment Reminders. Powered by Twilio - Node.js/Express
 
-[![Build
-Status](https://travis-ci.org/TwilioDevEd/appointment-reminders-node.svg?branch=master)](https://travis-ci.org/TwilioDevEd/appointment-reminders-node)
+[![Node.js CI](https://github.com/TwilioDevEd/appointment-reminders-node/actions/workflows/node.js.yml/badge.svg)](https://github.com/TwilioDevEd/appointment-reminders-node/actions/workflows/node.js.yml)
 
 
 Use Twilio to create automatic appointment reminders for your business users. For a step-by-step tutorial see [twilio docs](https://www.twilio.com/docs/tutorials/walkthrough/appointment-reminders/node/express).
