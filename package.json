@@ -33,7 +33,7 @@
     "cron": "^1.1.0",
     "debug": ">=2.6.9",
     "dotenv-safe": "^4.0.4",
-    "eslint": "^3.19.0",
+    "eslint": "^8.10.0",
     "express": "~4.14.0",
     "moment": "^2.11.2",
     "moment-timezone": "^0.5.0",
