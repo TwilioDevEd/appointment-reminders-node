@@ -35,7 +35,7 @@
     "dotenv-safe": "^4.0.4",
     "eslint": "^3.19.0",
     "express": "~4.14.0",
-    "moment": "^2.11.2",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.0",
     "mongoose": "^4.4.3",
     "morgan": "~1.7.0",
