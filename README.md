@@ -7,7 +7,7 @@
 [![Node.js CI](https://github.com/TwilioDevEd/appointment-reminders-node/actions/workflows/node.js.yml/badge.svg)](https://github.com/TwilioDevEd/appointment-reminders-node/actions/workflows/node.js.yml)
 
 
-Use Twilio to create automatic appointment reminders for your business users. For a step-by-step tutorial see [twilio docs](https://www.twilio.com/docs/tutorials/walkthrough/appointment-reminders/node/express).
+Use Twilio to create automatic appointment reminders for your business users. For a step-by-step tutorial see [twilio docs](https://www.twilio.com/docs/tutorials/walkthrough/appointment-reminders/node/express)
 
 
 ## Local development
